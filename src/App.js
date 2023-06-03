@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import BookReview from './Project/BookReview';
+import Booklist from './Project/Booklist';
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      BookSelect: null,
+      ReviewInput: false
+    };
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  handleChildClick = (index) => {
+    this.setState({ BookSelect: index, ReviewInput: true });
+    console.log('App.js index', index);
+    // 부모 컴포넌트에서 전달받은 index 값을 처리
+  };
+  render() {
+    const { BookSelect, ReviewInput } = this.state;
+    return (
+      <>
+        <div style={{
+          float: 'left'
+        }}>
+          <Booklist handleClick={this.handleChildClick} />
+        </div>
+        <div style={{
+          float: 'rigth'
+        }}>
+          {ReviewInput && <BookReview bookIndex={BookSelect} />}
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;
