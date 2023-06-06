@@ -37,18 +37,19 @@ class Booklist extends Component {
     }
 
     handleClick(index) {
+        const {title} = this.state.list[index]
         console.log('index:', index);
         // handleClick 값을 부모 컴포넌트로 전달
-        this.props.handleClick(index);
+        this.props.handleClick(index,title);
     };
 
-    componentDidUpdate() {
-        this.check();
-    }
+    // componentDidUpdate() {
+    //     this.check();
+    // }
 
-    componentDidMount() {
-        this.check();
-    }
+    // componentDidMount() {
+    //     this.check();
+    // }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.check);
@@ -60,7 +61,7 @@ class Booklist extends Component {
                 <ul>
                     {this.state.list.map((book, index) => (
                         <li key={index}>
-                            <button style={{ height: 100, width: 100 }} onClick={() => this.handleClick(index)}>
+                            <button style={{ height: 250, width: 200 ,margin : 10}} onClick={() => this.handleClick(index)}>
                                 <img src={book.image} alt={book.title} style={{ height: '100%', width: '100%' }} />
                             </button>
                         </li>
