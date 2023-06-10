@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import BookReview from './Project/BookReview';
 import Booklist from './Project/Booklist';
+import BookHistory from './Project/BookHistory'; // BookHistory 컴포넌트 임포트
+import './App.css';
+import BookReading from './Project/BookReading';
 
 class App extends Component {
   constructor(props) {
@@ -8,30 +11,54 @@ class App extends Component {
     this.state = {
       BookSelect: null,
       ReviewInput: false,
-      booktitle : ''
+      booktitle: '',
+      history: [],//history
     };
   }
 
   handleChildClick = (index, title) => {
-    this.setState({ BookSelect: index, ReviewInput: true ,booktitle : title});
-    console.log('App.js index', index);
-    
-    console.log('title: ', this.state.booktitle);
-    // 자녀 컴포넌트에서 전달받은 index 값을 처리
+    const { history } = this.state;
+    const updatedHistory = [...history, title]; // 클릭한 도서 제목을 히스토리에 추가
+    this.setState({
+      BookSelect: index,
+      ReviewInput: true,
+      booktitle: title,
+      history: updatedHistory,//history
+    });
   };
 
   render() {
-    const { BookSelect, ReviewInput,booktitle} = this.state;
+    const { BookSelect, ReviewInput, booktitle, history } = this.state;
     return (
       <>
         <div>
-          <Booklist handleClick={this.handleChildClick} />
+          <header>
+            도서 리뷰 사이트
+          </header>
+          <nav>
+            로그인
+            <BookReading BookSelect ={BookSelect}/>
+          </nav>
         </div>
-        <div>
+        <main>
+          <aside>
+            <Booklist handleClick={this.handleChildClick} />
+          </aside>
           <section>
-          {ReviewInput && <BookReview bookIndex={BookSelect} booktitle={booktitle}/>}
+            {ReviewInput && <BookReview bookIndex={BookSelect} booktitle={booktitle} />}
           </section>
-        </div>
+          <article>
+            <BookHistory bookHistory={history} /> {/*history*/}
+          </article>
+        </main>
+        <footer style={{ textAlign: 'center', padding: '10px' }}>
+          백석대학교(주)
+          <div style={{ marginTop: '10px' }}>
+            개발자: 김현, 노형석, 민주훈, 장진혁
+            <br /><br />
+          </div>
+        </footer>
+
       </>
     );
   }

@@ -26,12 +26,12 @@ class BookReview extends Component {
     
     handleInputChange = (e) => {
         this.setState({ reviewText: e.target.value });
+        // console.log(e.target.value)
     };
 
     render() {
         const { reviews, reviewText } = this.state;
         const { bookIndex,booktitle } = this.props;
-
         const bookReviews = reviews.map((rv, index) => {
             if (rv.bookIndex === bookIndex) {
                 return <li key={index}>{rv.text}</li>;
@@ -41,14 +41,14 @@ class BookReview extends Component {
 
         return (
             // 
-            <div style={{textAlign : 'center'}}> 
+            <div> 
                 <h1>{booktitle} 책</h1>
                 <BookDetail bookIndex ={bookIndex} booktitle={booktitle}/>
                 <div>
                     리뷰 작성:
                     <textarea
                     placeholder='리뷰작성'
-                        value={reviewText}
+                        value={reviewText}//작성되면 초기화해서 이전값 없애기
                         onChange={this.handleInputChange}
                     />
                 </div><br/>
